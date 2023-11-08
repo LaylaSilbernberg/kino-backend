@@ -60,8 +60,9 @@ class KinoBackendControllerTests {
 				.perform(MockMvcRequestBuilders
 						.get("/api/kino/Blade Runner"))
 				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Blade Runner"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.director").value("Ridley Scott"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.Title").value("Blade Runner"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.Director").value("Ridley Scott"))
+				.andDo(MockMvcResultHandlers.print())
 				.andReturn()
 				.getResponse()
 				.getContentAsString();
