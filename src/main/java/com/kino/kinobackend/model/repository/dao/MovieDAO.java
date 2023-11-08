@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity(name = "movie")
-public class MovieDAO {
+public final class MovieDAO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -17,6 +17,7 @@ public class MovieDAO {
 
     private String title;
 
+    @Column(name = "year_of_release")
     private String year;
 
     private String rated;
@@ -35,12 +36,12 @@ public class MovieDAO {
     private String country;
     private String awards;
     private String posterURL;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "movie", cascade = CascadeType.ALL)
     private List<RatingsDAO> ratings;
     private String dvdRelease;
     private String boxOffice;
 
-    protected MovieDAO(String title, String year, String rated, String released, String runtime, String genre, String director, String writer, String actors, String plot, String languages, String country, String awards, String posterURL, List<RatingsDAO> ratings, String dvdRelease, String boxOffice) {
+    public MovieDAO(String title, String year, String rated, String released, String runtime, String genre, String director, String writer, String actors, String plot, String languages, String country, String awards, String posterURL, List<RatingsDAO> ratings, String dvdRelease, String boxOffice) {
         this.title = title;
         this.year = year;
         this.rated = rated;
@@ -56,6 +57,29 @@ public class MovieDAO {
         this.awards = awards;
         this.posterURL = posterURL;
         this.ratings = ratings;
+        this.dvdRelease = dvdRelease;
+        this.boxOffice = boxOffice;
+    }
+
+    public void setRatings(List<RatingsDAO> ratings) {
+        this.ratings = ratings;
+    }
+
+    public MovieDAO(String title, String year, String rated, String released, String runtime, String genre, String director, String writer, String actors, String plot, String languages, String country, String awards, String posterURL, String dvdRelease, String boxOffice) {
+        this.title = title;
+        this.year = year;
+        this.rated = rated;
+        this.released = released;
+        this.runtime = runtime;
+        this.genre = genre;
+        this.director = director;
+        this.writer = writer;
+        this.actors = actors;
+        this.plot = plot;
+        this.languages = languages;
+        this.country = country;
+        this.awards = awards;
+        this.posterURL = posterURL;
         this.dvdRelease = dvdRelease;
         this.boxOffice = boxOffice;
     }
