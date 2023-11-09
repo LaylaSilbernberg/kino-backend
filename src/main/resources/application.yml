@@ -20,9 +20,9 @@ spring:
     output:
       ansi:
         enabled: always
-#    init:
-#      platform: postgresql
-#      mode: always
+    init:
+      platform: postgresql
+      mode: always
   output:
     ansi:
       enabled: always
