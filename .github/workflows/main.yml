@@ -8,7 +8,7 @@ on:
       - 'README.md'
 
 env:
-  IMAGE_URL: europe-west4-docker.pkg.dev/kino-backend-00001-4qc/LaylaSilbernberg/kino-backend/kino-backend:${{ github.sha }}
+  IMAGE_URL: europe-west4-docker.pkg.dev/kino-backend-00001-4qc/kino-backend/kino-backend:${{ github.sha }}
 
 # replace region with your region, ex: europe-north1-docker.pkg.dev
 # also replace all project-id etc to match your situation. 
