@@ -1,5 +1,5 @@
 FROM openjdk
-COPY build/libs/**-0.0.1-SNAPSHOT.jar app.jar
+COPY target/**-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 3000
 
 ENTRYPOINT ["java","-jar","/app.jar"]
