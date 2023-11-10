@@ -21,18 +21,17 @@ jobs:
           cache: 'maven'
     - name: Build with Maven
       run: mvn clean package
-  save-output:
-      name: Save output
-      runs-on: ubuntu-latest
-
-      steps:
-        - name: Upload output file
-          uses: actions/upload-artifact@v3
-          with:
-            name: output-log-file
-            path: output.log
+  login:
+    runs-on: ubuntu-latest
+    needs: build_and_package
+    steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          credits: ${{secrets.AZURE_CREDS }}
   deploy:
     runs-on: ubuntu-latest
+    needs: login
     steps:
     - name: Azure WebApp
       uses: Azure/webapps-deploy@v2
