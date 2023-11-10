@@ -28,7 +28,7 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          credits: ${{secrets.AZURE_CREDS }}
+          creds: ${{secrets.AZURE_CREDS }}
   deploy:
     runs-on: ubuntu-latest
     needs: login
