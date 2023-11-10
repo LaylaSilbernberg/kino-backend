@@ -1,0 +1,49 @@
+name: Java CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  build_and_package:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Setup jdk-17
+      uses: actions/setup-java@v3
+      with:
+          distribution: 'zulu'
+          java-version: '17'
+          cache: 'maven'
+    - name: Build with Maven
+      run: mvn clean package
+  save-output:
+      name: Save output
+      steps:
+        - name: Upload output file
+          uses: actions/upload-artifact@v3
+          with:
+            name: output-log-file
+            path: output.log
+  deploy:
+    runs-on: windows-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{secrets.AZURE_CREDS}}
+      - name: Azure CLI script file
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.53.1
+          inlineScript: |
+            az webapp deploy \
+            --resource-group KinoResourceGroup \
+            --name kino-backend \
+            --src-path ./target/kino-backend-0.0.1-SNAPSHOT.jar --type jar
